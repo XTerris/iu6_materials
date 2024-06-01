@@ -1,0 +1,110 @@
+\documentclass[12pt]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PARAMETERS
+\newcommand{\labNumber}{1}
+\newcommand{\labName}{Название лабы тут}
+\newcommand{\labDiscipline}{Название дисциплины тут}
+\newcommand{\groupName}{ИУ6-25Б}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+
+\usepackage[paperheight=297mm,
+  paperwidth=210mm,
+  top=15mm,
+  bottom=15mm,
+  left=25mm,
+  right=10mm
+]{geometry}
+
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+\usepackage{amsmath}
+
+\begin{document}
+
+\begin{center}
+    {
+        \fontsize{10pt}{12pt}\selectfont
+        \textit{Федеральное государственное бюджетное образовательное учреждение высшего образования}
+        \par
+    }
+\end{center}
+
+\begin{minipage}[t]{0.15\textwidth}
+    
+    \vspace{1pt}
+    \includegraphics[width=0.1\paperwidth]{bmstu-logo}
+\end{minipage}%
+\begin{minipage}[t]{0.8\textwidth}
+    \vspace{1pt}
+    \begin{center}
+        \fontsize{14pt}{16pt}\selectfont
+        \textbf{
+            \textit{
+                «Московский государственный технический университет \\
+                имени Н.Э. Баумана» \\
+                (национальный исследовательский университет) \\
+                (МГТУ им. Н.Э. Баумана)
+            }
+        }
+    \end{center}
+    \par
+\end{minipage}%
+
+\vspace{5mm}
+
+\noindent\rule{\linewidth}{2.5pt}
+
+\vspace{5mm}
+
+{
+    \fontsize{14pt}{16pt}\selectfont
+    \noindent ФАКУЛЬТЕТ \underline{\hspace{18mm} ИНФОРМАТИКА И СИСТЕМЫ УПРАВЛЕНИЯ \hspace{20mm}}
+    \par
+    \vspace{7pt}
+    \noindent КАФЕДРА \underline{\hspace{24mm} КОМПЬЮТЕРНЫЕ СИСТЕМЫ И СЕТИ (ИУ6) \hspace{22mm}}
+    \par
+}
+
+\vspace{30mm}
+
+\begin{center}
+    {
+        \fontsize{16pt}{18pt}\selectfont
+        \textbf{О\:т\:ч\:е\:т} % cringe spacing (but works)
+        \par
+    }
+    \vspace{8mm}
+    {
+        \fontsize{14pt}{16pt}\selectfont
+        \textbf{по лабораторной работе № \labNumber}
+        \par
+    }
+    \vspace{8mm}
+\end{center}
+
+{
+\fontsize{14pt}{16pt}\selectfont
+\textbf{Название лабораторной работы: \labName}
+\par
+\vspace{6mm}
+\textbf{Название дисциплины: \labDiscipline}
+\par
+\vspace{20mm}
+\hspace{20mm} Студент гр. \groupName \hfill $\underset{\text{(Подпись, дата)}}{\underline{\hspace{30mm}}}$ $\underset{\text{(И.О. Фамилия)}}{\underline{\hspace{30mm}}}$
+\par
+\vspace{10mm}
+\hspace{20mm} Преподаватель \hfill $\underset{\text{(Подпись, дата)}}{\underline{\hspace{30mm}}}$ $\underset{\text{(И.О. Фамилия)}}{\underline{\hspace{30mm}}}$
+\par
+}
+\vfill
+\begin{center}
+    \fontsize{12pt}{14pt}\selectfont
+    Москва, \the\year
+\end{center}
+\thispagestyle{empty}
+\end{document}
