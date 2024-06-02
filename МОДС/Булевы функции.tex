@@ -1,0 +1,530 @@
+\documentclass[10pt]{article}
+% for russian lang
+\usepackage[T2A]{fontenc}
+\usepackage[english, russian]{babel}
+% end for russian lang
+
+% config page
+%\usepackage[paperheight=6in,
+%   paperwidth=5in,
+%   top=10mm,
+%   bottom=20mm,
+%   left=10mm,
+%   right=10mm]{geometry}
+
+\usepackage[a4paper, margin=20mm]{geometry}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{indentfirst}
+\usepackage{csquotes}
+
+\title{Булевы функции}
+\author{ИУ6-25Б}
+\date{2024}
+
+\begin{document}
+\maketitle
+
+
+\section*{Основные понятия}
+\par $E = \{ 0, 1 \}$ - булевы переменные, область значений и определения любой булевой функции
+\par Алгебра, образованная множеством $E$ и всеми операциями на нём, называется \textbf{алгеброй логики}.
+\par Количество булевых функций $= 2^{2^n}$
+\par Способы задания булевой функции:
+\begin{itemize}
+    \item аналитический: $f = \overline x_1 x_2 \lor x_1 x_2 = (x_1 \lor x_2) \land (\overline x_1 \lor x_2)$
+    \item {
+        таблица истинности:
+        \par
+        \begin{tabular}{|c|c|c|}
+            \hline
+            $x_1$ & $x_2$ & $f$ \\
+            \hline
+            $0$ & $0$ & $0$ \\
+            $0$ & $1$ & $1$ \\
+            $1$ & $0$ & $0$ \\
+            $1$ & $1$ & $1$ \\
+            \hline
+        \end{tabular}
+        }
+\end{itemize}
+
+\par Переменные могут быть \textbf{существенными} или \textbf{несущественными}.
+\par Переменная $x_i$ булевой функции $f(x_1, \dots, x_{i-1}, x_i, x_{i+1}, \dots, x_n)$ называется \textbf{существенной}, если: $$f(x_1, \dots, x_{i-1}, 0, x_{i+1}, \dots, x_n) \ne f(x_1, \dots, x_{i-1}, 1, x_{i+1}, \dots, x_n)$$
+\par Это означает, что существует набор $(a_1, \dots, a_{i-1}, a_{i+1}, \dots, a_n)$ размера $n - 1$ такой, что:$$f(a_1, \dots, a_{i-1}, 0, a_{i+1}, \dots, a_n) \ne f(a_1, \dots, a_{i-1}, 1, a_{i+1}, \dots, a_n)$$
+\par Тогда говорят, что $x_i$ существенная переменная и $f(\dots)$ \textbf{существенно зависит} от $x_i$.
+\par Иначе $x_i$ - несущественная переменная.
+\par \textit{Например:} $f(x_1, x_2, x_3) = f(x_1, x_3)$ $\implies$ $x_2$ - несущественная переменная.
+\par Иногда удобно добавить несущественные переменные.
+
+\subsection*{Элементарные булевы функции}
+\begin{itemize}
+    \item[I.] Булевы функции одной переменной:
+        \par
+        \begin{tabular}{|c|c|c|c|c|}
+            \hline
+            $x$ & $f_1$ & $f_2$ & $f_3$ & $f_4$ \\
+            \hline
+            $0$ & $0$ & $1$ & $0$ & $1$ \\
+            $1$ & $0$ & $1$ & $1$ & $0$ \\
+            \hline
+        \end{tabular}
+        \begin{itemize}
+            \item $f_1(x) = 0$ - const 0
+            \item $f_2(x) = 1$ - const 1
+            \item $f_3(x) = x$ - тождественная функция
+            \item $f_4(x) = \overline x$ - отрицание или инверсия
+        \end{itemize}
+    \item[II.] 16 функций 2 переменных:
+        \begin{itemize}
+            \item $f_9(x_1, x_2) = x_1 \oplus x_2$ - сложение по модулю 2
+            \item $f_{10}(x_1, x_2) = x_1 \rightarrow x_2$ - следование
+            \item $f_{13}(x_1, x_2) = x_1 \equiv x_2$ - эквивалентность
+        \end{itemize}
+\end{itemize}
+
+\par Пусть $F = \{ f_1, f_2, \dots, f_{k} \}$. Функция $f$, полученная подстановкой функций $F$ друг в друга и переименованием переменных, называется \textbf{суперпозицией} функций $f_1, f_2, \dots, f_{k}$.
+\par Выражение, описывающее суперпозицию, называется \textbf{формулой} над $F$.
+\par Множество $F$ называется \textbf{базисом}.
+\par Функция $f$ получена путём суперпозиции функций базиса $F$.
+
+\par $\varphi(\varphi_1, \varphi_2, \dots, \varphi_n)$, где $\varphi_i$ - формула над $F$ или переменная, называется \textbf{главной или внешней формулой}, а все $\varphi_i$ называются \textbf{подформулами}.
+\par Вложенность подформул называется \textbf{глубиной}.
+\par Для каждой булевой функции можно задать бесконечное число формул.
+\par Базис для $f = \overline x_1 x_2 \lor x_1 x_2: \space F = \{ \land, \lor, \neg \}$
+
+\par\textbf{Опр.} Формулы, базис которых составляют функции $\{ \land, \lor, \neg \}$, называются \textbf{булевыми формулами}. Сами операции называются \textbf{булевыми операциями}.
+
+\par Алгебра $<E, \land, \lor, \neg>$ называется булевой \textbf{алгеброй}.
+
+\par Примеры выражения некоторых булевых функций формулами булевой алгебры:
+\begin{itemize}
+    \item $f = x_1 \downarrow x_2 = \overline {x_1 \lor x_2}$
+    \item $f = x_1 \vert x_2 = \overline{x_1 x_2}$
+    \item $f = x_1 \oplus x_2 = \overline x_1 x_2 \lor x_1 \overline x_2$
+    \item $f = x_1 \equiv x_2 = \overline x_1 \overline x_2 \lor x_1 x_2$
+\end{itemize}
+\subsection*{Свойства операций булевой алгебры}
+\begin{enumerate}
+    \item Ассоциативность:
+        \begin{itemize}
+            \item $(x_1 \land x_2) \land x_3 = x_1 \land (x_2 \land x_3)$
+            \item $(x_1 \lor x_2) \lor x_3 = x_1 \lor (x_2 \lor x_3)$
+        \end{itemize}
+    \item Коммутативность:
+        \begin{itemize}
+            \item $x_1 \land x_2 = x_2 \land x_1$
+            \item $x_1 \lor x_2 = x_2 \lor x_1$
+        \end{itemize}
+    \item Дистрибутивность:
+        \begin{itemize}
+            \item $x_1 \land (x_2 \lor x_3) = (x_1 \lor x_2) \land (x_1 \lor x_3)$
+            \item $x_1 \lor (x_2 \land x_3) = (x_1 \land x_2) \lor (x_1 \land x_3)$
+        \end{itemize}
+    \item Идемпотентность:
+        \begin{itemize}
+            \item $x_1 \land x_1 \land \dots \land x_1 = x_1$
+            \item $x_1 \lor x_1 \lor \dots \lor x_1 = x_1$
+        \end{itemize}
+    \item Закон де Моргана:
+        \begin{itemize}
+            \item $\overline{x_1 \lor x_2} = \overline x_1 \land \overline x_2$
+            \item $\overline{x_1 \land x_2} = \overline x_1 \lor \overline x_2$
+        \end{itemize}
+    \item Двойное отрицание (кратное отрицание):
+        \begin{itemize}
+            \item $\overline{\overline x} = x$
+            \item $\overline {\overline {\overline x}} = {\overline x}$
+        \end{itemize}
+    \item Свойства констант:
+        \begin{itemize}
+            \item $x \lor 0 = 0$
+            \item $x \lor 1 = 1$
+            \item $x \land 0 = 0$
+            \item $x \land 1 = x$
+        \end{itemize}
+    \item Противоречие:
+        \begin{itemize}
+            \item $x \land \overline x = 0$
+        \end{itemize}
+    \item Тавтология:
+        \begin{itemize}
+            \item $x \lor \overline x = 1$
+        \end{itemize}
+    \item Поглощение конъюнкции:
+        \begin{itemize}
+            \item $x_1 \lor (x_1 \land x_2) = x_1$
+        \end{itemize}
+\end{enumerate}
+
+\par \textbf{Правило замены:} если в некоторой формуле $\varphi$ подформулу $\varphi_i$ заменить на логически эквивалентную $\varphi_k$ , то полученная формула $\varphi'$ будет эквивалентна исходной.
+\par $\varphi (\dots \varphi_i \dots),\space \varphi_k = \varphi_i$
+\par $\varphi (\dots \varphi_k \dots) = \varphi (\dots \varphi_i \dots)$
+\par $\varphi (\varphi_k \vert \varphi_i)$ - $\varphi_k$ вместо \textbf{некоторых} вхождений $\varphi_i$
+\par $\varphi (\varphi_k \vert \vert \varphi_i)$ - $\varphi_k$ вместо \textbf{всех} вхождений $\varphi_i$
+
+\par Таким образом, используя логическую эквивалентность подформул(бесконечное кол-во) при помощи подстановки одних подформул вместо других, можно преобразовывать исходную формулу, не теряя логической эквивалентности полученной формулы исходной.
+\par \textit{Пример:}
+\begin{itemize}
+    \item $x_1 x_2 \lor x_1 \overline x_2 = x_1$ - склеивание
+    \item обобщённое склеивание: $x_1 x_3 \lor x_2 \overline x_3 \lor x_1 x_2 = x_1 x_3 \lor x_2 \overline x_3 \lor x_1 x_2 (x_3 \lor \overline x_3) = x_1 x_3 \lor x_2 \overline x_3 \lor x_1 x_2 x_3 \lor x_1 x_2 \overline x_3 = x_1 x_3 \lor x_2 \overline x_3$
+    \item $x_1 \lor \overline x_1 x_2 = (x_1 \lor \overline x_1) \land (x_1 \lor x_2) = x_1 \lor x_2$
+\end{itemize}
+
+\par $x_1 \lor f(x_1, x_2, \dots, x_n) = x_1 \lor f(x_2, \dots, x_n)$ - ???????
+
+\par \textbf{Опр.} Ранг элементарной конъюнкции - количество литер в её записи.
+\par \textbf{Опр.} Длина ДНФ - сумма рангов элементарных конъюнкций.
+\par \textbf{Опр.} ДНФ булевой функции $f$ называется минимальной, если её длина наименьшая среди всех ДНФ этой функции.
+\par \textbf{Опр.} Булева функция $f_1$ называется импликантой булевой функции $f$, если $f_1$ принимает значения $0$ на тех же(но необязательно только тех) наборах, что и $f$.
+\par \textbf{Опр.} Элементарная конъюнкция вида $K_i = x_1^{\alpha_1} x_2^{\alpha_2} \dots x_i^{\alpha_i}$ называется простой импликантой функции $f$, если $K_i$ - импликанта функции $f$ и никакая часть $K_i$ не является импликантой функции $f$.
+\par \textbf{Теорема.} Всякая булева функция может быть представлена в ДНФ, каждая элементарная конъюнкция которой является простой импликантой.
+\par \textbf{Опр.} Дизъюнкция всех простых импликант функции $f$ называется сокращённой ДНФ функции $f$.
+\par \textbf{Опр.} Дизъюнкция простых импликант булевой функции такая, что удаление любой импликанты приводит к потери покрытия всех единиц функции, называется тупиковой ДНФ (ТДНФ)
+\par \textbf{Теорема.} Любая минимальная ДНФ булевой функции является тупиковой.
+
+\section*{Алгебра и полином Жегалкина}
+\par\textbf{Опр.} Алгеброй над базисом, состоящим из булевых функций $\land, \oplus, 0, 1$, называется \textbf{алгеброй Жегалкина}.
+\par\textbf{Обоз.} $<\land, \oplus, 0, 1>$ - алгебра, $F_\text{Ж} = \{ \land, \oplus, 0, 1 \}$ - базис
+\subsection*{Свойства операций в базисе Жегалкина}
+\begin{enumerate}
+    \item $x_1 \oplus x_2 = x_2 \oplus x_1$ - коммутативность
+    \item $x_1 \land (x_2 \oplus x_3) = (x_1 \land x_2) \oplus (x_1 \land x_3)$
+    \item $x \oplus 0 = x; \qquad x \oplus 1 = \overline x$
+    \item выполняются все свойства конъюнкции и констант булевой алгебры
+    \item $x \oplus x = 0$
+\end{enumerate}
+
+\par Переход от формулы в базисе Жегалкина к эквивалентной формуле в булевом базисе и обратно возможен всегда. Достаточно выразить дизъюнкцию и отрицание в базисе Жегалкина:
+\begin{itemize}
+    \item $\overline x = x \oplus 1$
+    \item $x_1 \lor x_2 = \overline{\overline x_1 \overline x_2} = (x_1 \oplus 1)(x_2 \oplus 1) \oplus 1 = x_1 x_2 \oplus x_1 \oplus x_2 \oplus 1 \oplus 1 = x_1 \oplus x_2 \oplus x_1 x_2$
+\end{itemize}
+
+\par $F_\text{Б} \rightarrow F_\text{Ж}$
+
+\par\textbf{Опр.} Формула, имеющая вид суммы по модулю 2 конъюнкций, называется \textbf{полиномом Жегалкина} для данной булевой функции.
+
+\par Пусть $f$ в СДНФ в булевом базисе - дизъюнкция элементарных конъюнкций.
+\par $f(x_1, x_2, x_3) = \overline x_1 x_2 \overline x_3 \lor x_1 x_2 \overline x_3 \lor x_1 \overline x_2 x_3$
+\par Если $f_1, f_2$ - две любые элементарные конъюнкции, включающие все переменные, то $f_1 \land f_2 = 0$.
+\par В базисе Жегалкина: $f_1 \lor f_2 = f_1 \oplus f_2 \oplus f_1 f_2$
+\par При $f_1 \land f_2 = 0$: $f_1 \lor f_2 = f_1 \oplus f_2 \oplus 0 = f_1 \oplus f_2$
+\par То есть $f(x_1, x_2, x_3) = \overline x_1 x_2 \overline x_3 \oplus x_1 x_2 \overline x_3 \oplus x_1 \overline x_2 x_3$
+\subsection*{Получение полинома Жегалкина}
+\par $f(x_1, x_2, x_3) = \lor_1(1, 4)$ - значение 1 на 1 и 4 наборах СДНФ.
+\par $f(x_1, x_2, x_3) = \overline x_1 \overline x_2 x_3 \lor x_1 \overline x_2 \overline x_3$
+\par Получение полинома:
+\par $f = \overline x_1 \overline x_2 x_3 \oplus x_1 \overline x_2 \overline x_3 = (x_1 \oplus 1) (x_2 \oplus 1) x_3 \oplus x_1 (x_2 \oplus 1) (x_3 \oplus 1) =$
+\par $=x_1 x_2 x_3 \oplus x_1 x_3 \oplus x_2 x_3 \oplus x_3 \oplus x_1 x_2 x_3 \oplus x_1 x_2 \oplus x_1 x_3 \oplus x_1 = x_1 \oplus x_1 x_2 \oplus x_2 x_3 \oplus x_3$
+\par\textbf{Степень} полинома Жегалкина определяется количеством литер в элементарной конъюнкции максимального ранга.
+
+\par\textbf{Теорема.} Для всякой булевой функции существует полином Жегалкина, причём единственный.
+
+\section*{Классы булевых функций}
+\par Булевы функции подразделяются на 5 классов.
+\subsection*{1 класс}
+\par\textbf{Опр.} Булева функция $f$ от $n$ переменных называется сохраняющей константу нуля, если $f(0, \dots, 0) = 0$.
+\par\textbf{Обоз.} $K_0$
+\par\textbf{Теорема.} Число всех булевых функций класса $K_0$ равно $2^{2^n-1}$.
+\par\textbf{Док-во:}
+\par Только на одном наборе функция исключительно принимает значение 0.
+\par Так как всего наборов $2^n$, то произвольное значение функция принимает на $2^n-1$ наборах.
+\par Так как всего функций $2^{2^n}$, а произвольное значение принимает $2^{2^n-1}$ функция, то число функций, принимающих значение 0, равно $2^{2^n} - 2^{2^n-1} = 2^{2^n-1}$
+
+\subsection*{2 класс}
+\par\textbf{Опр.} Булева функция $f_n$ называется сохраняющей константу единицы, если $f(1, \dots, 1) = 1$.
+\par\textbf{Обоз.} $K_1$
+\par\textbf{Теорема.} Число всех булевых функций класса $K_1$ равно $2^{2^n-1}$.
+\par Док-во аналогично 1 классу.
+\subsection*{3 класс}
+\par $f(x_1, \dots, x_n)$ - функция $n$ переменных
+\par Функция $f^*(x_1, \dots, x_n) = \overline f(\overline x_1, \dots, \overline x_n)$ называется двойственной к функции $f$.
+\par $f^*$ обладает свойством инволюции: $(f^*)^* = f$
+\par Очевидно, что бинарное отношение "быть двойственным" симметрично.
+\begin{enumerate}
+    \item Чтобы получить двойственную функцию, нужно полностью инвертировать таблицу истинности:
+        \begin{tabular}{|c|c|c|}
+            \hline
+            $x_1$ & $x_2$ & $f$ \\
+            \hline
+            $0$ & $0$ & $1$ \\
+            $0$ & $1$ & $1$ \\
+            $1$ & $0$ & $1$ \\
+            $1$ & $1$ & $0$ \\
+            \hline
+        \end{tabular}
+        \(\implies\)
+        \begin{tabular}{|c|c|c|}
+            \hline
+            $x_1$ & $x_2$ & $f^*$ \\
+            \hline
+            $1$ & $1$ & $0$ \\
+            $1$ & $0$ & $0$ \\
+            $0$ & $1$ & $0$ \\
+            $0$ & $0$ & $1$ \\
+            \hline
+        \end{tabular}
+        \par $f = \overline x_1 \lor \overline x_2$ \\ $f^* = \overline x_1 \overline x_2$
+    \item Или взять аргументы и функцию с инверсией: $f^* = \overline {\overline {\overline x}_1 \lor \overline {\overline x}_2} = \overline x_1 \overline x_2$
+\end{enumerate}
+
+\par\textbf{Опр.} Булева функция называется \textbf{самодвойственной}, если она совпадает с двойственной ей функцией.
+\par Функция самодвойственна тогда и только тогда, когда на взаимопротивоположных наборах принимает взаимопротивоположные значения.
+\begin{itemize}
+    \item Чтобы опровергнуть самодвойственность функции $f$, достаточно найти 2 таких противоположных набора $\sigma_1, \sigma_2$, что $f(\sigma_1) = f(\sigma_2)$.
+    \item Чтобы доказать самодвойственность, нужно перебрать все взаимопротивоположные наборы и убедиться в том, что на любое паре значения функции противоположны.
+\end{itemize}
+
+\par\textbf{Теорема.} Мощность класса (количество) самодвойственных функций равна $2^{2^{n-1}}$.
+\par\textbf{Обоз.} $K_S$
+
+\par\textit{Пример:}
+\begin{enumerate}
+    \item Тождественная функция самодвойственна
+        \begin{itemize}
+            \item $f(x) = x$
+            \item $f^*(x) = \overline {\overline x} = x$
+        \end{itemize}
+    \item Отрицание самодвойственно:
+        \begin{itemize}
+            \item $f(x) = \overline x$
+            \item $f(x) = \overline {\overline {\overline x}} = \overline x$
+        \end{itemize}
+\end{enumerate}
+
+\subsubsection*{2 теоремы о двойственности:}
+\begin{enumerate}
+    \item \textbf{Теорема.} Если функция $f(x_1, \dots, x_n)$ реализована формулой $\varphi (\varphi_1(x_1, \dots, x_n), \dots, \varphi_n(x_1, \dots, x_n))$, то формула $\varphi^* (\varphi_1^*(x_1, \dots, x_n), \dots, \varphi_n^*(x_1, \dots, x_n))$ реализует булеву функцию $f^*(x_1, \dots, x_n)$.
+    \item[] \textit{Пример:}
+        \begin{itemize}
+            \item $\varphi = x_1 x_2 \lor \overline x_1 \overline x_2 = \varphi_1 \lor \varphi_2$
+            \item $\varphi_1 = x_1 x_2 \qquad \varphi_1^* = \overline {\overline x_1 \overline x_2}$
+            \item $\varphi_2 = \overline x_1 \overline x_2 \qquad \varphi_2^* = \overline {\overline {\overline x}_1 \overline {\overline x}_2} = \overline {x_1 x_2}$
+            \item $\varphi^* = \overline {\overline {\varphi_1^*} \lor \overline {\varphi_2^*}} = \overline {\overline x_1 \overline x_2 \lor x_1 x_2} = (x_1 \lor x_2) \land (\overline x_1 \lor \overline x_2) = x_1 \overline x_2 \lor \overline x_1 x_2 = x_1 \oplus x_2$
+            \item $\varphi = x_1 \equiv x_2 \qquad \varphi^* = x_1 \oplus x_2$
+        \end{itemize}
+    \item \textbf{Теорема.} Пусть имеется базис $F = \{ f_1, \dots, f_m \}$ и этому базису поставлен в соответствие базис двойственных функций $F^* = \{ f_1^*, \dots, f_m^* \}$. Если формула $\varphi$ над $F$ реализует $f$, то $\varphi^*$ над $F^*$ реализует функцию $f^*$ при том, что функции $f_i, i = \overline {1, m}$ заменяются на $f_i^*$.
+    \item[] \textit{Пример:}
+        \begin{itemize}
+            \item $F = \{ f_1, f_2 \} \qquad f_1 = x_1 \land x_2 \qquad f_2 = x_1 \oplus x_2$
+            \item $F = \{ \land, \oplus \}$
+            \item $F^* = \{ \lor, \equiv \}$
+            \item $f = x_1 x_2 \qquad f^* = x_1 \lor x_2$
+            \item $\varphi = (x_1 \overline x_2 \oplus \overline x_1 \overline x_2) x_1$
+            \item $\varphi^* = ((x_1 \lor \overline x_2) \equiv (\overline x_1 \lor \overline x_2)) \lor x_1$
+        \end{itemize}
+\end{enumerate}
+
+\par Из взаимной двойственности $\lor$ и $\land$ следует справедливость законов де Моргана:
+\begin{tabular} {c c c}
+    $\overline {x_1 \land x_2}$ & \(\implies\) & $\overline x_1 \lor \overline x_2$ \\
+    \hline
+    $\overline {x_1 \lor x_2}$ & \(\implies\) & $\overline x_1 \overline x_2$
+\end{tabular}
+
+\subsection*{4 класс}
+\par\textbf{Опр.} Булева функция $f(x_1, \dots, x_n)$ называется линейной, если она представима в виде $C_0 \oplus C_1 x_1 \oplus C_2 x_2 \oplus \dots \oplus C_n x_n$ , где коэффициенты $C_i \in \{ 0, 1 \}$.
+\par Функция линейна тогда и только тогда, когда она представима полиномом Жегалкина первой степени.
+\par\textbf{Обоз.} $K_L$
+\par\textbf{Теорема.} Число всех линейных функций равно $2^{n+1}$.
+\par Пояснение: Коэффициентов $C_i$ всего $n + 1$.
+\par\textit{Пример:}
+\begin{enumerate}
+\item $f(x_1, x_2, x_3) = 1 \oplus x_2 \oplus x_3$
+\item[] $C_0 = 1 \quad C_1 = 0 \quad C_2 = 1 \quad C_3 = 1$
+\item $f(x_1, x_2, x_3) = x_1 \oplus x_2$
+\item[] $C_0 = 0 \quad C_1 = 1 \quad C_2 = 1 \quad C_3 = 0$
+\end{enumerate}
+\subsection*{5 класс}
+\par Пусть имеется 2 набора из $n$ переменных:
+\par $\partial_1 = (a_1, \dots, a_n) \quad$и$\quad \partial_2 = (a_1', \dots, a_n')$
+\par Говорят, что набор $\partial_1$ не меньше набора $\partial_2 (\partial_1 \ge \partial_2)$, если для всех $a_i$ выполняется $a_i \ge a_i'$
+\par\textit{Пример:}
+\par $\partial_1 = 1011$
+\par $\partial_2 = 1001$
+\par Такие наборы называются \textbf{сравнимыми}, иначе \textbf{несравнимыми}.
+\par\textbf{Опр.} Булева функция называется монотонной, если для любых её сравнимых наборов $\partial_1$ и $\partial_2$ верно $f(\partial_1) \ge f(\partial_2)$.
+\par\textbf{Обоз.} $K_M$
+\par Один из вариантов оценки мощности $K_M$: $2^{n^{n/2}} \le |K_M| \le 2^{an^{n/2}}$, где $a$ - неизвестный коэффициент.
+
+
+\section*{Функциональная полнота}
+\par\textbf{Опр.} Множество $\Sigma$ булевых функций называется \textbf{замкнутой системой}, если любая суперпозиция функций из $\Sigma$ даёт функцию, принадлежащую $\Sigma$.
+\par Всякая замкнутая система булевых функций $\Sigma$ порождает замкнутый класс, состоящий из всех формул, которые можно получить суперпозицией функций из $\Sigma$.
+\par $[\Sigma]$ - замыкание $\Sigma$
+\par Если рассматривать $\Sigma$ как базис, то $[\Sigma]$ - множество всех формул над $\Sigma$.
+\par\textit{Пример:}
+\par $F = x_1 \lor x_2 \lor \dots \lor x_n$
+\par $\Sigma = \{ \lor \}$
+
+\par $K_0, K_1, K_S, K_L, K_M$ - замкнутые классы, они также называются классами Поста (Е. Пост)
+\par Множество всех булевых функций образует замкнутый класс.
+\par Таблица принадлежности булевых функций замкнутым классам:
+\par \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    & $K_0$ & $K_1$ & $K_S$ & $K_L$ & $K_M$ \\
+    \hline
+    $0$ & $+$ & $-$ & $-$ & $+$ & $+$ \\
+    \hline
+    $1$ & $-$ & $+$ & $-$ & $+$ & $+$ \\
+    \hline
+    $\neg$ & $-$ & $-$ & $+$ & $+$ & $-$ \\
+    \hline
+    $\land$ & $+$ & $+$ & $-$ & $-$ & $+$ \\
+    \hline
+    $\lor$ & $+$ & $+$ & $-$ & $-$ & $+$ \\
+    \hline
+    $\oplus$ & $+$ & $-$ & $-$ & $+$ & $-$ \\
+    \hline
+    $\rightarrow$ & $-$ & $+$ & $-$ & $-$ & $-$ \\
+    \hline
+    $\equiv$ & $-$ & $+$ &$-$ & $+$ & $-$ \\
+    \hline
+\end{tabular}
+\par Классы не пустые, попарно различны и каждый класс не совпадает с множеством приведённых и всех булевых функций.
+\par\textbf{Опр.} Система булевых функций называется полной, если её замыкание совпадает с множеством всех булевых функций.
+\par Это означает, что любая булева функция может быть представлена над этой системой как над базисом.
+\par\textbf{Теорема Поста.} Для того, чтобы система булевых функций была полной, необходимо и достаточно того, чтобы она содержала хотя бы одну функцию:
+\begin{enumerate}
+    \item не сохраняющую константу 0
+    \item не сохраняющую константу 1
+    \item не самодвойственную
+    \item не линейную
+    \item не монотонную
+\end{enumerate}
+\par\textbf{Доказательство.}
+\par Необходимость ($\Rightarrow$): если система функций не удовлетворяет ни одному из условий, то в лучшем случае система будет собственным подмножеством множества булевых функций либо пустым множеством
+\par Достаточность ($\Leftarrow$): см. в учебнике Кузнецова
+
+\par\textit{Другими словами:}  Множество $F$ булевых функций образует полную систему $\Leftrightarrow$ когда это множество не содержится целиком ни в одном из классов Поста.
+\par\textit{Примеры:}
+\begin{itemize}
+    \item $F = \{ \neg, \land \}$ - базис И-НЕ
+    \item $F = \{ \neg, \lor \}$ - базис ИЛИ-НЕ
+    \item $F = \{ \neg, \land, \lor \}$
+    \item $F_\text{Ж} = \{ \land, \oplus, 1, 0 \}$
+\end{itemize}
+
+\par Один из способов определения полноты системы булевых функций - сведение этой системы к другой системе, полнота которой доказана.
+\par\textit{Пример:}
+\begin{itemize}
+\item $F = \{ \downarrow \}$
+\item[] $x \downarrow x = \overline x$
+\item[] $x_1 \downarrow x_2 = \overline{x_1 \lor x_2}$
+\item[] $x_1 \lor x_2 = \overline{x_1 \downarrow x_2} = (x_1 \downarrow x_2) \downarrow (x_1 \downarrow x_2)$
+\item[] Перешли к базису $\{ \neg, \lor \}$
+\item $F = \{ \downarrow \}$
+\item[] $x \vert x = \overline x$
+\item[] $x_1 \vert x_2 = \overline{x_1 \land x_2}$
+\item[] $x_1 \land x_2 = \overline{x_1 \vert x_2} = (x_1 \vert x_2) \vert (x_1 \vert x_2)$
+\item[] Перешли к базису $\{ \neg, \land \}$
+\end{itemize}
+\subsection*{Как обосновать (не)принадлежность некоторой булевой функции к тому или иному классу Поста?}
+\par Покажем немонотонность отрицания. Пусть $f(x_1, \dots, x_n)$ - не монотонная функция
+\par $\sigma_1 = (a_1, \dots, a_{i-1}, 0, a_{i+1}, \dots, a_n)$
+\par $\sigma_2 = (a_1, \dots, a_{i-1}, 1, a_{i+1}, \dots, a_n)$
+\par $\sigma_1 \le \sigma_2$
+\par Если $f(\sigma_1) \le f(\sigma_2)$, то она монотонная
+\par $f(\sigma_1) = 1, f(\sigma_2) = 0 \Rightarrow$ функция не монотонна
+\par $\overline x = f(a_1, \dots, a_{i-1}, x, a_{i+1}, \dots, a_n)$
+
+\par\textit{Пример:} Пусть дана система булевых функций 3 переменных $\{f_1, f_2 \}$, заданных таблицей истинности:
+\par\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    $x_1$ & $x_2$ & $x_3$ & $f_1$ & $f_2$ \\
+    \hline
+    $0$ & $0$ & $0$ & $1$ & $1$ \\
+    $0$ & $0$ & $1$ & $1$ & $1$ \\
+    $0$ & $1$ & $0$ & $1$ & $1$ \\
+    $0$ & $1$ & $1$ & $1$ & $0$ \\
+    $1$ & $0$ & $0$ & $1$ & $0$ \\
+    $1$ & $0$ & $1$ & $1$ & $1$ \\
+    $1$ & $1$ & $0$ & $0$ & $1$ \\
+    $1$ & $1$ & $1$ & $1$ & $0$ \\
+    \hline
+\end{tabular}
+
+\par\begin{enumerate}
+\item Принадлежность $K_0$:
+    \begin{itemize}
+	    \item $f_1(0,0,0) = 1 \Rightarrow f_1 \not\in K_0$
+	    \item $f_2(0,0,0) = 1 \Rightarrow f_2 \not\in K_0$
+    \end{itemize}
+\item Принадлежность $K_1$:
+    \begin{itemize}
+        \item $f_1(1,1,1) = 1 \Rightarrow f_1 \in K_1$
+        \item $f_2(1,1,1) = 0 \Rightarrow f_2 \not\in K_1$
+    \end{itemize}
+\item Принадлежность  $K_S$:
+    \begin{itemize}
+        \item $f_1(1,1,1) = 1, f_1^*(1,1,1) = 0 \Rightarrow f_1 \not\in K_S$
+        \item $f_2(0,0,1) = 1, f_2^*(0,0,1) = 0 \Rightarrow f_2 \not\in K_S$
+    \end{itemize}
+\item Принадлежность $K_M$:
+    \begin{itemize}
+        \item $f_1(0,0,0) > f_1(1,1,1) \Rightarrow f_1 \not\in K_M$
+        \item $f_2(0,0,0) > f_2(0,1,1) \Rightarrow f_2 \not\in K_M$
+    \end{itemize}
+\item Принадлежность $K_L$:
+    \begin{itemize}
+        \item В общем случае любая функция $f_n$ выражается полиномом Жегалкина $\le n$ степени:
+        \item[] $P_{\text{Ж}} (x_1, x_2, x_3) = a_{123} x_1 x_2 x_3 \oplus a_{12} x_1 x_2 \oplus a_{13} x_1 x_3 \oplus a_{23} x_2 x_3 \oplus a_1 x_1 \oplus a_2 x_2 \oplus a_3 x_3 \oplus a_0$
+        \item Если удастся свести его к первой степени, то функция линейна:
+        \item[] $a_1 x_1 \oplus a_2 x_2 \oplus a_3 x_3 \oplus a_0 \in K_L$
+        \item Для решения задачи воспользуемся методом неопределённых коэффициентов:
+        \begin{enumerate}
+            \item Рассмотрим набор $(0, 0, 0)$:
+            \item[] $f_1(0, 0, 0) = a_0 = 1 \therefore a_0 = 1$
+            \item Рассмотрим наборы $(0,0,1), (0,1,0), (1,0,0)$:
+            \item[] $f_1(0,0,1) = a_3 \oplus a_0 = 1 \therefore a_3 = 0$
+            \item[] $f_1(0,1,0) = a_2 \oplus a_0 = 1 \therefore a_2 = 0$
+            \item[] $f_1(1,0,0) = a_1 \oplus a_0 = 1 \therefore a_1 = 0$
+            \item Рассмотрим наборы: $(1,1,0), (1,0,1), (0,1,1)$:
+            \item[] $f_1(1,1,0) = a_{12} \oplus a_1 \oplus a_2 \oplus a_0 = 0 \therefore a_{12} = 1$
+            \item[] $f_1(1,0,1) = a_{13} \oplus a_1 \oplus a_3 \oplus a_0 = 1 \therefore a_{13} = 0$
+            \item[] $f_1(0,1,1) = a_{23} \oplus a_2 \oplus a_3 \oplus a_0 = 1 \therefore a_{23} = 0$
+            \item Рассмотрим набор $(1,1,1)$:
+            \item[] $f_1(1,1,1) = a_{123}\oplus 1 \oplus 1 = 1 \therefore a_{123} = 1$
+        \end{enumerate}
+        \item $f_(x_1, x_2, x_3) = x_1 x_2 x_3 \oplus x_1 x_2 \oplus 1 \Rightarrow f_1 \not\in K_L$
+    \end{itemize}
+\end{enumerate}
+\subsection*{Примеры реализации некоторых элементарных функций с помощью не элементарных}
+\par Функции, сохраняющие константу 0 и 1, отрицание:
+    \begin{enumerate}
+    \item Пусть $f_{0} (x_{0}, \dots, x_{n}) \in K_{0}$ и $f_{1} (x_{1}, \dots, x_{1}) \in K_{1}$:
+        \begin{description}
+            \item $f_{0} (0, \dots, 0) = 0$
+            \item $f_{0}(1, \dots, 1) = 0$
+            \item $0 = f_{0}(x, \dots, x)$
+            \item $f_{1} (0, \dots, 0) = 1$
+            \item $f_{1}(1, \dots, 1) = 1$
+            \item $1 = f_{1}(x, \dots, x)$
+        \end{description}
+    \item Пусть $f_{0}$ аналогично пункту 1. Рассмотрим $f_{1}$:
+        \begin{description}
+            \item $f_{1}(0, \dots, 0) = 1$
+            \item $f_{1}(1, \dots, 1) = 0$
+            \item $\overline x = f_{1}(x,\dots, x)$
+            \item $1 = \overline {f_{0}}(x, \dots, x) = f_{1}(f_{0}(x, \dots, x), \dots, f_{0}(x, \dots, x))$
+        \end{description}
+    \item $\sigma_{1} \leq \sigma_{2}$ - сравнимые наборы:
+        \begin{description}
+            \item $\sigma_{1} = (a_{1}, \dots, a_{i-1}, 0, a_{i+1}, \dots, a_{n})$
+            \item $\sigma_{2} = (a_{1}, \dots, a_{i-1}, 1, a_{i+1}, \dots, a_{n})$
+            \item $f(\sigma_{1}) = 1$
+            \item $f(\sigma_{2}) = 0$
+            \item $f \not\in K_{M}$
+            \item $\overline x = f(a_{1}, \dots, a_{i-1}, x, a_{i+1}, \dots, a_{n})$
+        \end{description}
+    \item $f(x_{1}, x_{2}) \not\in K_{L}$:
+        \begin{enumerate}
+            \item $f(x_{1}, x_{2}) = x_{1} x_{2} \oplus 1 = \overline {x_{1} x_{2}} \therefore x_{1} x_{2} = \overline f (x_{1}, x_{2})$
+            \item $f(x_{1}, x_{2}) = x_{1} x_{2} \oplus x_{2} \oplus 1 = (x_{1} \oplus 1) x_{2} \oplus 1 = \overline {\overline x_{1} x_{2}}\therefore x_{1} x_{2} = \overline f (\overline x_{1}, x_{2})$
+            \item $f(x_{1}, x_{2}) = x_{1} x_{2} \oplus x_{1} = x_{1} (x_{2} \oplus 1) = x_{1} \overline x_{2} \therefore x_{1}x_{2} = f(x_{1},\overline x_{2})$$ $$\text{d) } f(x_{1}, x_{2}) = x_{1}x_{2} \oplus x_{1} \oplus x_{2} \oplus 1 = x_{1} (x_{2} \oplus 1) \oplus (x_{2} \oplus 1) = (x_{1} \oplus 1) (x_{2} \oplus 1) = \overline x_{1} \overline x_{2} \therefore x_{1} x_{2} = f(\overline x_{1}, \overline x_{2})$
+        \end{enumerate}
+\end{enumerate}
+
+\end{document}
