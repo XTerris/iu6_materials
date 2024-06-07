@@ -44,6 +44,7 @@
 \item \(\int dF(x) = F(x) + C\)
 \item \(\int (f_1(x) + ... + f_n(x))dx = \int f_1(x)dx + ... + \int f_n(x)dx + C\)
 \item \(\int Af(x)dx = A\int f(x)dx + C\)
+\item Если $\int f(x) \, dx = F(x) + C$ и $u = \varphi(x)$, то $\int f(u) \, dx = F(u) + C$
 \end{enumerate}
 
 \subsection*{Доказательство теоремы:}
@@ -68,7 +69,7 @@
 \par
 \textbf{Теорема.} (о разложении правильной рациональной дроби в сумму простейших)
 Правильная рациональная дробь {\Large \(\frac{Q_m(x)}{P_n(x)}\)}, \(m < n\),
-где \(P_n(x) = a_{0}(x - x_{0})^{k_{1}} \dots (x - x_{s})^{k_{s}}(x^2 + p_{1}x + q_{1})^{l_{1}} \dots (x^2 + p_{m}x + q_{m})^{l_{m}}\),
+где \(P_n(x) = a_{0}(x - x_{0})^{k_{0}} \dots (x - x_{s})^{k_{s}}(x^2 + p_{1}x + q_{1})^{l_{1}} \dots (x^2 + p_{m}x + q_{m})^{l_{m}}\),
 единственным образом может быть представлена в виде суммы элементарных дробей:
 \[\frac{Q_m(x)}{P_n(x)} = \frac{1}{a_{0}} \left( \frac{A_{1}}{(x - x_{1})^{k_{1}}} + \frac{A_{2}}{(x - x_{1})^{k_{1}-1}} + \dots + \frac{A_{k_{1}}}{(x - x_{1})^{1}} + \right.\]
 \[+ \frac{B_{1}}{(x - x_{s})^{k_{s}}} + \frac{B_{2}}{(x - x_{s})^{k_{s}-1}} + \dots + \frac{B_{k_{s}}}{(x - x_{s})^{1}} + \dots  +\]
