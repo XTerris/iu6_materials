@@ -1050,15 +1050,15 @@ title: Диаграмма классов
 ---
 classDiagram
 	direction TB
-	Car "1" *-- "1" Engine
-	Car "1" o-- "0..n" Passenger
+	Car *-- Engine
+	Car o-- "0..n" Passenger
 	class Car {
 		- engine: Engine
 		+ maxPassengersCount: int
 		+ passengers: Passenger[]
 		+ Car(int enginePower, int maxPassengersCount)
-		+ void Move()
-		+ int getEnginePower()
+		+ Move(): void
+		+ getEnginePower(): int
 	}
 	class Engine {
 		+ power: int
@@ -1070,7 +1070,127 @@ classDiagram
 	}
 ```
 #### 24. C#. Интерфейсы. Пример.
+Интерфейс - это особый абстрактный класс, описывающий ряд общих свойств и методов, которые должны быть предоставлены любым классом, реализующим интерфейс. В отличие от абстрактных классов интерфейсы могут реализовываться различными иерархиями классов. Синтаксис объявления: `[Атрибуты][Спецификаторы] interface Имя[; Предки] Тело`
+Возможные спецификаторы: `new` (для вложенных), `public`, `protected`, `internal` (по умолчанию), `private`
+Все методы и свойства интерфейсов по умолчанию `public` и не могут иметь других спецификаторов. Методы в реализации также должны иметь спецификатор `public`.
+```cs
+namespace ns
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+	        // создаём объекты, реализующие один интерфейс
+            Person person = new Person("Jack");
+            Animal animal = new Animal("Dog");
+            // можно присвоить объект производного класса
+            IMoveable smth = new Animal("Cat");
+            // работа со всеми объектами одинаковым образом
+            person.Move();
+            animal.Move();
+            smth.Move();
+            PrintName(person);
+            PrintName(smth);
+        }
+        // метод может принимать в качестве параметра любой производный класс
+        // то есть любой объект, реализующий интерфейс IMoveable
+        static void PrintName(IMoveable creature)
+        {
+            Console.WriteLine(creature.Name);
+        }
+    }
+    // объявление интерфейса
+    interface IMoveable
+    {
+        string Name { get; set; }
+        void Move();
+    }
+    // наследование и реализация интерфейса
+    class Person : IMoveable
+    {
+	    // создание поля Name обязательно
+        public string Name { get; set; }
+        public Person(string name)
+        {
+            Name = name;
+        }
+        // реализация метода Move обязательна
+        public void Move()
+        {
+            Console.WriteLine("Person \"{0}\" is moving...", Name);
+        }
+    }
+    class Animal : IMoveable
+    {
+        public string Name { get; set; }
+        public Animal(string name)
+        {
+            Name = name;
+        }
+        public void Move()
+        {
+            Console.WriteLine("Animal \"{0}\" is moving...", Name);
+        }
+    }
+}
+```
+Так же, как и классы, интерфейсы поддерживают наследование:
+```cs
+public interface INamed
+{
+   string Name { get; set; }
+}
+public interface IMoveable: INamed
+{
+   void Move();
+}
+```
+Для объектов классов, реализующих интерфейсы, возможно явное преобразование к типу интерфейса и проверка на то, реализует ли объект интерфейс:
+```cs
+Person person = new Person("Jack");
+// явное преобразование
+//возвращает null, если объект не реализует интерфейс
+IMoveable im = person as IMoveable;
+// проверка, реализует ли объект person интерфейс IMoveable
+if (person is IMoveable)
+{
+	// действия
+}
+```
+Если объект реализует несколько интерфейсов с одинаковыми методами, можно реализовать оба интерфейс и уточнять, реализацию какого из них необходимо вызвать:
+```cs
+namespace ns
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Person person = new Person();
+            ((IMoveable1)person).Move(); // вызов Move() первого интерфейса
+            ((IMoveable2)person).Move(); // вызов Move() второго интерфейса
+        }
+    }
+    interface IMoveable1
+    {
+        void Move();
+    }
+    interface IMoveable2
+    {
+        void Move();
+    }
+    // реализация 2 интерфейсов
+    class Person : IMoveable1, IMoveable2 {
+        void IMoveable1.Move() {
+            Console.WriteLine("Move() from IMoveable1");
+        }
+        void IMoveable2.Move() {
+            Console.WriteLine("Move() from IMoveable2");
+        }
+    }
+}
+```
 #### 25. C#. Свойства. Пример.
+
 #### Дополнительно
 > Этого нет в основных вопросах, но очень высока вероятность, что будет в дополнительных.
 ##### Обобщения
