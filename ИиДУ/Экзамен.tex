@@ -106,7 +106,7 @@
 \par Если функция $y = f(x)$ интегрируема на $[a, b]$ и $f(x) \geq 0 \; (f(x) \leq 0) \; \forall x \in [a, b]$, то $$\int_{a}^b f(x) \, dx \geq 0 \; \left( \int_{a}^b f(x) \, dx \leq 0 \right)$$
 \par\textbf{Доказательство.}
 \par Пусть $a < b$: $$\int_{a}^b f(x) \, dx = \lim_{ \substack{n \to \infty \\ \text{max}_{k}\Delta x \to 0}} \sum_{k = 1}^n f(\xi_{k}) \Delta x_{k}\text{ , где } \Delta x_{k} = x_{k} - x_{k - 1}$$
-\par Пусть $f(x) \geq 0 \; \forall x \in [a, b]$, тогда $f(\xi_{k}) \geq 0, \Delta x_{k > 0} \Rightarrow f(\xi_{k}) \Delta x_{k} \geq 0 \; \forall k$, тогда: $$\sum_{k=1}^n f(\xi_{k}) \Delta x_{k} \geq 0 \Rightarrow \lim_{ \substack{n \to \infty \\ \text{max}_{k}\Delta x \to 0}} \sum_{k = 1}^n f(\xi_{k}) \Delta x_{k} \geq 0 \Rightarrow \int_{a}^b f(x) \, dx \geq 0 _\blacktriangle$$
+\par Пусть $f(x) \geq 0 \; \forall x \in [a, b]$, тогда $f(\xi_{k}) \geq 0, \Delta x_{k} > 0 \Rightarrow f(\xi_{k}) \Delta x_{k} \geq 0 \; \forall k$, тогда: $$\sum_{k=1}^n f(\xi_{k}) \Delta x_{k} \geq 0 \Rightarrow \lim_{ \substack{n \to \infty \\ \text{max}_{k}\Delta x \to 0}} \sum_{k = 1}^n f(\xi_{k}) \Delta x_{k} \geq 0 \Rightarrow \int_{a}^b f(x) \, dx \geq 0 _\blacktriangle$$
 
 \section*{4. Сформулировать свойства определенного интеграла. Доказать теорему об оценке определенного интеграла.}
 \par\textbf{Свойства определённого интеграла см. в пункте 3.}

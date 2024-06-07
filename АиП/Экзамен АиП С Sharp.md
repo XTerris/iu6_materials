@@ -795,7 +795,7 @@ Console.WriteLine("str2 = \"{0}\"", str2); // str2 = "abc"
 - `\w+\@\w+\.\w{2,4}` - email адрес
 ##### Работа с регулярными выражениями в C\#
 В C# можно использовать регулярные выражения 2 способами:
-- через статические методы класса `Regex` (`System.Text.Regex`)
+- через статические методы класса `Regex` (`System.Text.RegularExpressions`)
 - с помощью создания объекта класса `Regex` и инициализации его регулярным выражением
 
 Методы:
@@ -852,7 +852,287 @@ namespace ns
 }
 ```
 #### 21. C#. Наследование. Пример.
+Синтаксис описания классов-потомков:
+`[Атрибуты][Спецификаторы] class Имя [:Предки] Тело`
+В качестве предков помимо **единственного** обычного класса могут выступать интерфейсы. Если предки не указаны, то предком по умолчанию является класс `Object`. Конструкторы не наследуются. Порядок вызова конструкторов при создании объекта:
+1. При отсутствии вызова конструктора базового класса через `base` вызывается конструктор базового класса без параметров
+2. Вызываются конструкторы полей-объектов
+3. Вызывается конструктор производного класса
+
+Любой компонент базового класса можно заменить с помощью `new`. Доступ к исходным компонентам базового класса можно получить с помощью обращения через `base`.
+```cs
+namespace ns
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Number n = new Number(1.23);
+            Complex z = new Complex(2.34, 5.24);
+            n.Print();
+            z.Print();
+        }
+    }
+    public class Number {
+        public double num;
+        public Number(double num_) {
+            num = num_;
+        }
+        public void Print() {
+            Console.WriteLine("{0:0.##}", num);
+        }
+    }
+    class Complex : Number {
+        public double im;
+        // вызов конструктора базового класса
+        public Complex(double re, double im_) : base(re) {
+            im = im_;
+        }
+        // переопределение метода
+        new public void Print() {
+  	        // base.Print() - возможен вызов метода класса Number
+            Console.WriteLine("{0:0.##} + {1:0.##}i", num, im);
+        }
+    }
+}
+```
 #### 22. C#. Полиморфное наследование. Абстрактные классы. Пример.
+##### Полиморфное наследование
+Полиморфное наследование реализуется через таблицу виртуальных методов. Виртуальные методы описываются служебным словом `virtual`. Связь объекта реализуется скрытым кодом в конструкторе. Для переопределения виртуальных методов используется служебное слово `override`. Необходимость применения полиморфного наследования возникает часто, так как работа с объектами происходит через указатели и при обычном переопределении функции для объекта, сохранённого по указателю базового класса, будет вызван неправильный метод.
+```cs
+namespace ns
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Number n = new Number(1.23);
+            Number z = new Complex(2.34, 5.24);
+            n.Print();
+            z.Print(); // вызван метода производного класса, указатель типа Number
+        }
+    }
+    class Number {
+        public double num;
+        public Number(double num_) {
+            num = num_;
+        }
+        // определяем виртуальный метод
+        public virtual void Print() {
+            Console.WriteLine("{0:0.##}", num);
+        }
+    }
+    class Complex : Number {
+        public double im;
+        public Complex(double re, double im_) : base(re) {
+            im = im_;
+        }
+        // переопределяем виртальный метод при наследовании
+        public override void Print() {
+            Console.WriteLine("{0:0.##} + {1:0.##}i", num, im);
+        }
+    }
+}
+```
+##### Абстрактные классы и методы
+Методы, не реализованные в классе, называются абстрактными, объявляются как `abstract`. Класс, содержащий абстрактные методы, называется абстрактным. Объекты такого класса создавать запрещено.
+```cs
+namespace ns
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Person person = new Person("John", 32);
+            Animal animal = new Animal("Dog", 1);
+            // создать объект абстрактного класса не получится
+            // Creature creature = new Creature("Something", 0); - ошибка
+            person.Print();
+            person.Move();
+            animal.Print();
+            animal.Move();
+        }
+    }
+    // абстрактный класс, содержащий абстрактные методы
+    abstract class Creature
+    {
+        public string name { get; set; }
+        public int age { get; set; }
+        public Creature(string name_, int age_) {
+            name = name_;
+            age = age_;
+        }
+        // объявление абстрактных методов
+        public abstract void Print();
+        public abstract void Move();
+    }
+    class Person : Creature {
+        public Person (string name, int age) : base(name, age) { }
+        // переопределние абстрактных методов
+        public override void Print() {
+            Console.WriteLine("Person: name = {0}, age = {1}", name, age);
+        }
+        public override void Move() {
+            Console.WriteLine("Person is moving...");
+        }
+    }
+    class Animal : Creature {
+        public Animal (string name, int age) : base(name, age) { }
+        // переопределение абстрактных методов
+        public override void Print() {
+            Console.WriteLine("Animal: name = {0}, age = {1}", name, age);
+        }
+        public override void Move() {
+            Console.WriteLine("Animal is moving...");
+        }
+    }
+}
+```
 #### 23. C#. Композиция и агрегация. Пример.
+Композиция и агрегация являются частными случаями ассоциации.
+**Ассоциация** - объекты класса включаются в качестве полей в объекты другого класса. Бывают: двусторонние, односторонние, самоассоциации и многозначные ассоциации. Могут иметь название, например "владеет" ("**HAS A**"):
+- Агрегация - объект класса-части включается в объект класса-целого и при отсутствии объектов класса-части объект класса-целого не теряет функциональности.
+- Композиция - объект класса-части включается в объект класса-целого и при отсутствии объектов класса-части объект класса-целого теряет функциональность. 
+```cs
+namespace ns
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Car car = new Car(100, 5);
+            Console.WriteLine(car.getEnginePower());
+            car.passengers[0] = new Passenger("John");
+            car.passengers[1] = new Passenger("Alex");
+            car.Move();
+        }
+    }
+    class Car
+    {
+        private Engine engine; // поле типа Engine
+        public readonly int maxPassengersCount;
+        public Passenger[] passengers; // массив ссылок на объекты типа Passenger
+        private Car() {} // скрываем конструктор без параметров
+        public Car(int enginePower, int maxPassengersCount_) {
+            maxPassengersCount = maxPassengersCount_;
+            engine = new Engine(enginePower);
+            passengers = new Passenger[maxPassengersCount_];
+        }
+        public void Move() {
+            Console.WriteLine("Car is moving...");
+        }
+        public int getEnginePower() {
+            return engine.power;
+        }
+    }
+    class Engine
+    {
+        public readonly int power;
+        private Engine() {} // скрываем конструктор без параметров
+        public Engine(int power_)
+        {
+            power = power_;
+        }
+    }
+    class Passenger {
+        public readonly string name;
+        private Passenger() {}  // скрываем конструктор без параметров
+        public Passenger(string name_) {
+            name = name_;
+        }
+    }
+}
+```
+
+```mermaid
+---
+title: Диаграмма классов
+---
+classDiagram
+	direction TB
+	Car "1" *-- "1" Engine
+	Car "1" o-- "0..n" Passenger
+	class Car {
+		- engine: Engine
+		+ maxPassengersCount: int
+		+ passengers: Passenger[]
+		+ Car(int enginePower, int maxPassengersCount)
+		+ void Move()
+		+ int getEnginePower()
+	}
+	class Engine {
+		+ power: int
+		+ Engine(int power)
+	}
+	class Passenger {
+		+ name: string
+		+ Passenger(string name)
+	}
+```
 #### 24. C#. Интерфейсы. Пример.
 #### 25. C#. Свойства. Пример.
+#### Дополнительно
+> Этого нет в основных вопросах, но очень высока вероятность, что будет в дополнительных.
+##### Обобщения
+Обобщение — средство языка C#, позволяющее создавать программный код, содержащий единственное (типизированное) решение задачи для различных типов, с его последующим применением для любого конкретного типа (`int`, `float`, `char` и т.д.). Аналог шаблонов С++, но подстановка конкретного типа в C# будет выполняться на этапе JIT–компиляции.
+Обобщения могут быть применены к классам, структурам, интерфейсам, методам и делегатам.
+```cs
+// Синтаксис описания обобщения класса
+class Имя_обобщения<Тип-параметр{,Тип-параметр}> 
+{ 
+     // Реализация полей и методов класса c параметрами
+}
+// синтаксис создания класса из обобщения
+Имя_обобщения <Тип {,Тип}> Имя = new Имя_обобщения <Тип {,Тип}>(Аргументы);
+```
+Пример:
+```cs
+namespace ns
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            // создание классов из обобщения
+            GenericClass<int> intVal = new GenericClass<int>(123);
+            GenericClass<double> doubleVal = new GenericClass<double>(43.525);
+            intVal.Print();
+            doubleVal.Print();
+        }
+    }
+    class GenericClass<T> {
+        // ? означает nullable, то есть может быть присвоено значение null
+        private T? Value { get; set; } // поле типа обобщения
+        public GenericClass() {
+            Value = default(T); // задать значение по умолчанию
+        }
+        public GenericClass(T val) {
+            Value  = val;
+        }
+        public void Print() {
+            Console.WriteLine(Value);
+        }
+    }
+}
+```
+Для обобщений возможно ограничение подставляемых типов:
+- `where T: struct` - только для типов-значений
+- `where T: class` - только для типов-ссылок
+- `where T: SomeClass` - только для производных классов от `SomeClass`
+- `where T: SomeInterface` - только для типов, реализующих интерфейс `SomeInterface`
+- `where T1: T2` - тип `T1` должен наследоваться от `T2`
+- `where T: new()` - тип `T` должен иметь конструктор без параметров
+
+Указывается после объявления обобщения:
+```cs
+static void GenericMethod1<T>(T param) where T:I1
+{
+    Console.WriteLine(param.I1_method());
+}
+```
+##### Работа с файлами
+##### Коллекции
+##### Индексаторы
+##### Перегрузка операций
+##### Делегаты
+##### События
