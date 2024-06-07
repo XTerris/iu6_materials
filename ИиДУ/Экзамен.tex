@@ -169,7 +169,8 @@ $$Y'(x) = \lim_{\Delta x \to 0} \frac{{f(c) \Delta x}}{\Delta x} = \lim_{ c \to 
 \par Формулы замены переменной в неопределённом интеграле: $$\int f(x) \, dx = \int f(\varphi(t)) \varphi'(t) \, dt$$
 \par Если $F(x)$ - первообразная функции $f(x)$, то $F(\varphi(t))$ - первообразная функции $f(\varphi(t))\varphi'(t)$
 \par По формуле Ньютона-Лейбница: $$\int_{a}^b f(x) \, dx = F(x)|_{a}^b = F(b) - F(a)$$
-\par Так как по условию: $\varphi(\alpha) = a, \varphi(\beta) = b$:$$\int_{a}^b f(\varphi(t)) \varphi'(t) \, dt = F(\varphi(t))|_{a}^b = F(\varphi(\beta)) - F(\varphi(\alpha)) = F(b) - F(a)$$
+\par Так как по условию: $\varphi(\alpha) = a, \varphi(\beta) = b$:
+$$\int_{\alpha}^\beta f(\varphi(t)) \varphi'(t) \, dt = F(\varphi(t))|_{\alpha}^\beta = F(\varphi(\beta)) - F(\varphi(\alpha)) = F(b) - F(a)$$
 \par Получим: $$\int_{a}^b f(x) \, dx = \int_{\alpha}^\beta f(\varphi(t)) \varphi'(t) \, dt _{\blacktriangle}$$
 
 \section*{10. Сформулировать свойства определенного интеграла. Интегрирование периодических функций. Интегрирование четных и нечетных функций на отрезке, симметричном относительно начала координат.}
@@ -201,7 +202,9 @@ $$Y'(x) = \lim_{\Delta x \to 0} \frac{{f(c) \Delta x}}{\Delta x} = \lim_{ c \to 
 \par\textbf{Доказательство.}
 \par\textbf{1)} По условию $\int_{a}^{+\infty} \varphi(x) \, dx$ сходится, $\implies$, $\exists$ конечный предел $$\lim_{b \to +\infty}{\int_{a}^b \varphi(x) \, dx } = M \implies \int_{a}^{b} \varphi(x) \, dx \leq M$$
 \par По условию $\forall x \in [a, +\infty) \; 0 < f(x) \leq \varphi(x)$, тогда по теореме об интегрировании неравенства  $0 < \int_{a}^b f(x) \, dx \leq \int_{a}^{b} \varphi(x) \, dx \leq M$
-\par Пусть $b_{1} \in (b, +\infty)$. Рассмотрим: $$\int_{a}^{b_{1}} f(x) \, dx = \int_{a}^{b} f(x) \, dx + \int_{b}^{b_{1}} f(x) \, dx > \int_{a}^{b} f(x) \, dx \implies \int_{a}^{b} f(x) \, dx \text{ есть функция, возрастающая с возрастанием } b$$
+\par Пусть $b_{1} \in (b, +\infty)$. Рассмотрим:
+$$\int_{a}^{b_{1}} f(x) \, dx = \int_{a}^{b} f(x) \, dx + \int_{b}^{b_{1}} f(x) \, dx > \int_{a}^{b} f(x) \, dx \implies$$
+$$\implies \int_{a}^{b} f(x) \, dx \text{ есть функция, возрастающая с возрастанием } b$$
 \par Тогда по теореме Вейерштрасса: $$\exists \lim_{ b \to +\infty } \int_{a}^{b} f(x) \, dx \leq M \implies \int_{a}^{+\infty} f(x) \, dx \text{ - сходящийся}$$
 \par\textbf{2)} (от противного)
 \par Предположим, что $\int_{a}^{+\infty} \varphi(x) \, dx$ сходится, тогда по доказательству **1)** $\int_{a}^{+\infty} f(x) \, dx$ тоже сходится, что противоречит условию, $\implies$, $\int_{a}^{+\infty} \varphi(x) \, dx$ расходится $_\blacktriangle$
