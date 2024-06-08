@@ -53,7 +53,7 @@
 \par\textbf{Доказательство.}
 \par $d(uv) = udv + vdu \Rightarrow udv = d(uv) - vdu$
 \par $u(x)$ и $v(x)$ - непрерывны на $[a, b] \Rightarrow \exists$ определённый интеграл от функций:
-$$\int u \, dv = \int d(uv) - \int v \, du \Rightarrow \int u\, dv = uv - \int v \, du \Large_{\blacktriangle}$$
+$$\int u \, dv = \int d(uv) - \int v \, du \Rightarrow \int u\, dv = uv - \int v \, du _{\blacktriangle}$$
 
 
 \section*{2. Разложение правильной рациональной дроби на простейшие. Интегрирование простейших дробей.}
@@ -115,7 +115,7 @@ $$\int u \, dv = \int d(uv) - \int v \, du \Rightarrow \int u\, dv = uv - \int v
 \par\textbf{Теорема об оценке определённого интеграла (теорема 9).}
 \par Если $m$ и $M$ соответственно наименьшее и наибольшее значения интегрируемой на $[a, b]$ функции $f(x)$, то $$m(b - a) \leq \int_{a}^b f(x) \, dx \leq M(b - a)$$
 \par\textbf{Доказательство.}
-\par По условию $m \leq f(x) \leq M$, где $m = min_{[a, b]} f(x), M = max_{[a, b]} f(x)$, и $f(x)$ интегрируема на $[a, b]$, тогда
+\par По условию $m \leq f(x) \leq M$, где $m = \min_{[a, b]} f(x), M = \max_{[a, b]} f(x)$, и $f(x)$ интегрируема на $[a, b]$, тогда
 $$\int_a^b  m \, dx \leq \int_{a}^b f(x)\, dx  \leq \int_{a}^b M \, dx \Rightarrow$$
 $$\Rightarrow m(b - a) \leq \int_{a}^b f(x)\, dx \leq M(b - a) _\blacktriangle$$
 
@@ -133,7 +133,7 @@ $$\Rightarrow m(b - a) \leq \int_{a}^b f(x)\, dx \leq M(b - a) _\blacktriangle$$
 \par\textbf{Теорема о среднем (теорема 11).}
 \par Если функция $f(x)$ непрерывна на $[a, b]$, a функция $\varphi(x)$ интегрируема и знакопостоянна на $[a, b]$, то $\exists$ точка $c \in (a, b)$ такая, что $$\int_{a}^b f(x)\varphi(x) \, dx = f(c) \int_{a}^b \varphi(x) \, dx$$
 \par\textbf{Доказательство.}
-\par $f(x)$ непрерывна на $[a, b] \Rightarrow$ по теореме Вейерштрасса она достигает на  $[a, b]$ наименьшее и наибольшее значения $m = min_{[a, b]} f(x)$ и $M = max_{[a, b]} f(x)$ и $m \leq f(x) \leq M \quad \forall x \in [a, b]$
+\par $f(x)$ непрерывна на $[a, b] \Rightarrow$ по теореме Вейерштрасса она достигает на  $[a, b]$ наименьшее и наибольшее значения $m = \min_{[a, b]} f(x)$ и $M = \max_{[a, b]} f(x)$ и $m \leq f(x) \leq M \quad \forall x \in [a, b]$
 \par Пусть $\varphi > 0$:
 $m \varphi(x) \leq f(x) \varphi(x) \leq M \varphi(x)$
 $$m \int_{a}^b \varphi(x) \, dx  \leq \int_{a}^b f(x) \varphi(x) \, dx \leq M \int_{a}^b \varphi(x) \, dx$$
@@ -168,7 +168,7 @@ $$Y'(x) = \lim_{\Delta x \to 0} \frac{{f(c) \Delta x}}{\Delta x} = \lim_{ c \to 
 \section*{9. Дать геометрическую интерпретацию определенного интеграла. Сформулировать и доказать теорему об интегрировании подстановкой для определенного интеграла.}
 \par\textbf{Сделать рисунок.} Геометрическая интерпретация определённого интеграла - площадь криволинейной трапеции, ограниченной графиком функции, осью $Ox$ и прямыми $x = a, x = b$
 \par\textbf{Теорема.} (о замене переменной в определённом интеграле)
-\par Если функция $f(x)$ непрерывна на $[a, b]$, а функции $x = \varphi(t), \varphi'(t), f(\varphi(t))$ непрерывны на $[a, b]$ и $\varphi(\alpha) = a, \varphi(\beta) = b$, то $$\int_{a}^b f(x) \, dx = \int_{\alpha}^\beta f(\varphi(t)) \varphi'(t) \, dt$$
+\par Если функция $f(x)$ непрерывна на $[a, b]$, а функции $x = \varphi(t), \varphi'(t), f(\varphi(t))$ непрерывны на $[\alpha, \beta]$ и $\varphi(\alpha) = a, \varphi(\beta) = b$, то $$\int_{a}^b f(x) \, dx = \int_{\alpha}^\beta f(\varphi(t)) \varphi'(t) \, dt$$
 \par\textbf{Доказательство.}
 \par Формулы замены переменной в неопределённом интеграле: $$\int f(x) \, dx = \int f(\varphi(t)) \varphi'(t) \, dt$$
 \par Если $F(x)$ - первообразная функции $f(x)$, то $F(\varphi(t))$ - первообразная функции $f(\varphi(t))\varphi'(t)$
@@ -417,19 +417,19 @@ v = \int \frac{q(x)}{e^{\int -p(x) \, dx}} \, dx + C
 \par\textbf{Доказательство.}
 \par $y_{0}(x)$ - решение ЛОДУ $L[y] = 0$ по усл., $\implies$, $L[y_{0}] = 0$
 \par Найдём (по свойству однородности): $L[Cy_{0}] = CL[y_{0}] = C \cdot 0 = 0$
-\par $L[Cy_{0}] = 0 \implies Cy_{0}(x)$ является решение ЛОДУ $L[y] = 0 \Large_\blacktriangle$
+\par $L[Cy_{0}] = 0 \implies Cy_{0}(x)$ является решение ЛОДУ $L[y] = 0 _\blacktriangle$
 \par\textbf{Теорема 2.} Если функции $y_{1}(x)$ и $y_{2}(x)$ являются решениями ЛОДУ $L[y] = 0$, то функция $y_{1}(x) + y_{2}(x)$ тоже является решение ЛОДУ $L[y] = 0$
 \par\textbf{Доказательство.}
 \par $y_{1}(x)$ и $y_{2}(x)$ - решения ЛОДУ $L[y] = 0$ по усл., $\implies$, $L[y_{1}] = 0, L[y_{2}] = 0$
 \par Найдём (по свойству аддитивности): $L[y_{1} + y_{2}] = L[y_{1}] + L_{1}[y_{2}] = 0 + 0 = 0$
-\par $L[y_{1} + y_{2}] = 0 \implies (y_{1}(x) + y_{2}(x))$ является решение ЛОДУ $L[y] = 0 \Large_\blacktriangle$
+\par $L[y_{1} + y_{2}] = 0 \implies (y_{1}(x) + y_{2}(x))$ является решение ЛОДУ $L[y] = 0 _\blacktriangle$
 \par (далее необязательные свойства)
 \par\textbf{Следствие.} Линейная комбинация с произвольными постоянными коэффициентами $C_{1}y_{1}(x) + C_{2}y_{2}(x) + \dots + C_{m}y_{m}(x)$ решений $y_{1}(x), y_{2}(x), \dots, y_{m}(x)$ ЛОДУ $L[y] = 0$ тоже является решением этого ЛОДУ.
 \par\textbf{Доказательство.}
 \par $L[y_{1}] = 0, L[y_{2}] = 0, \dots, L[y_{m}] = 0$ по условию
 \par Найдём $L[C_{1}y_{1} + C_{2}y_{2} + \dots + C_{m}y_{m}] = L[C_{1}y_{1}] + L[C_{2}y_{2}] + \dots + L[C_{m}y_{m}] =$
 \par $= C_{1}L[y_{1}] + C_{2}L[y_{2}] + \dots + C_{m}L[y_{m}] = 0$
-\par $L[C_{1}y_{1} + C_{2}y_{2} + \dots + C_{m}y_{m}] = 0 \implies C_{1}y_{1}(x) + C_{2}y_{2}(x) + \dots + C_{m}y_{m}(x)$ является решением ЛОДУ $L[y] = 0 \Large_\blacktriangle$
+\par $L[C_{1}y_{1} + C_{2}y_{2} + \dots + C_{m}y_{m}] = 0 \implies C_{1}y_{1}(x) + C_{2}y_{2}(x) + \dots + C_{m}y_{m}(x)$ является решением ЛОДУ $L[y] = 0 _\blacktriangle$
 \par\textbf{Утверждение.} ЛОДУ $L[y] = 0$ всегда имеет тривиальное решение $y \equiv 0$
 \par\textbf{Теорема.} Совокупность решений ЛОДУ $L[y] = 0$ образует линейное пространство.
 
@@ -643,7 +643,7 @@ $$= e^{2\alpha x}\neq 0 \; \forall x \in [a, b]$$
 *\par\textbf{Доказательство.}
 \par По условию $L[y_1] = f_{1}(x)$, $L[y_2] = f_{2}(x)$
 \par Найдём $L[y_{1} + y_{2}] = L[y_{1}] + L[y_{2}] = f_{1}(x) + f_{2}(x)$
-\par Следовательно, функция $y_{1}(x) + y_{2}(x)$ есть решение уравнения $L[y] = f_{1}(x) + f_{2}(x)\Large_{\blacktriangle}$
+\par Следовательно, функция $y_{1}(x) + y_{2}(x)$ есть решение уравнения $L[y] = f_{1}(x) + f_{2}(x) _{\blacktriangle}$
 
 \section*{34. Метод Лагранжа вариации произвольных постоянных для нахождения решения линейного неоднородного дифференциального уравнения 2-ого порядка и вывод системы соотношений для варьируемых переменных.}
 \par Дано ЛНДУ $y'' + p_{1}(x)y' + p_{2}(x)y = f(x)$ с непрерывными коэффициентами $p_{i}(x), i = \overline{1, n}$
