@@ -1236,6 +1236,7 @@ namespace ns
     }
 }
 ```
+---
 #### Дополнительно
 > Этого нет в основных вопросах, но очень высока вероятность, что будет в дополнительных.
 > Ещё дополняется
@@ -1297,6 +1298,57 @@ static void GenericMethod1<T>(T param) where T:I1
 }
 ```
 ##### Работа с файлами
+Статический класс `Directory` и класс `DirectoryInfo` позволяют работать с каталогами. Для работы с файлами используются классы `FileInfo` и `File` (статический)
+Некоторые методы и свойства класса `FileInfo`:
+- `CopyTo(path)` - скопировать файл в новое место
+- `Create()` - создать файл
+- `Delete()` - удалить файл
+- `MoveTo(path)` - переместить файл
+- `Exists` - существует ли файл
+- `Length` - размер файла
+- `FullName` - полное имя файла
+
+Статические методы `File`:
+- `Copy()` - копировать
+- `Move()` - переместить
+- `Create()` - создать файл
+- `Delete()` - удалить файл
+- `Exists(file)` - проверка, существует ли файл
+
+Для работы с текстовыми файлами (методы класса `File`):
+- `WriteAllText(path, text)` - запись строки в текстовый файл (создаёт файл, если не существует, перезаписывает существующее содержимое)
+- `void WriteAllLines(string path, string[] contents)` - запись массива строк
+- `AppendAllText(path, text)` - добавление в файл строки
+- `AppendAllLines(string path, IEnumerable<string> contents)` - добавление в файл набора строк
+- `ReadAllText(string path)` - чтение содержимого файла в одну строку
+- `string[] ReadAllLines(string path)` - чтение содержимого в массив строк
+- `IEnumerable<string> ReadAllLines(string path)` - чтение содержимого в коллекцию строк
+
+По умолчанию для файлов используется кодировка **UTF-8**, возможно использовать **UTF-16**:
+`File.WriteAllText(path, originalText, Encoding.Unicode);`
+Для работы с файлами также можно использовать классы `StreamReader` и `StreamWriter`.
+`StreamWriter` используется для записи в файл:
+- конструктор `StreamWriter(string path[, bool append, [System.Text.Encoding encoding]])`
+     - параметр `append` указывает на возможность добавления строк
+     - параметр `encoding` указывает на кодировку, которая будет применяться при записи
+ - `int Close()` - закрыть файл
+ - `void Flush()` - записать данные, оставшиеся в буфере, и очистить его
+ - `void Write(string value)` - запись данных простейших типов (перегружен для них)
+ - `void WriteLine(string value)` - запись с переносом строки
+
+`StreamReader` используется для чтения:
+- конструктор `StreamReader(string path[, System.Text.Encoding encoding])`
+- `void Close()` - закрывает файл
+- `int Peek()` - возвращает следующий доступный символ
+- `int Read()` -  считывает следующий символ в численном представлении
+- `string ReadLine()` - считывает строку
+- `string ReadToEnd()` - считывает весь текст из файла
+
+Для работы с двоичными файлами в классе `File` предусмотрены методы:
+- `byte[] ReadAllBytes(string path)` - чтение файла в массив байтов
+- `void WriteAllBytes(string path, byte[] bytes)` - запись массива байтов в файл
+
+Есть также аналогичные классы `BinaryWriter` и `BinaryReader`. `BinaryWriter` содержит методы `Close()`, `Flush()`, `Seek()` (установка позиции), `Write()` (перегружен для разных типов). `BinaryReader` содержит методы `Close()`, `ReadBoolean()`, `ReadByte()`, `ReadChar()` и т.д. для разных типов, `PeekChar()` (возвращает следующий символ)
 ##### Коллекции
 ##### Индексаторы
 ##### Перегрузка операций
