@@ -1351,6 +1351,95 @@ static void GenericMethod1<T>(T param) where T:I1
 Есть также аналогичные классы `BinaryWriter` и `BinaryReader`. `BinaryWriter` содержит методы `Close()`, `Flush()`, `Seek()` (установка позиции), `Write()` (перегружен для разных типов). `BinaryReader` содержит методы `Close()`, `ReadBoolean()`, `ReadByte()`, `ReadChar()` и т.д. для разных типов, `PeekChar()` (возвращает следующий символ)
 ##### Коллекции
 ##### Индексаторы
+Индексаторы - это разновидность свойств, с их помощью можно обратить к скрытому полю-массиву объекта без указания имени поля.
+```cs
+Атрибуты Спецификаторы Тип this [Список_параметров]
+{
+       [get Метод_чтения]
+       [set Метод_записи]
+}
+```
+Список параметров может включать произвольное количество индексов.
+```cs
+using System;
+
+namespace ns
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            IntVector vec = new IntVector(10);
+            // работаем с индексами
+            vec[1] = 4;
+            vec[4] = 5;
+            vec[7] = 100023;
+            for (int i = 0; i < 10; ++i)
+                Console.WriteLine(vec[i]);
+        }
+    }
+    class IntVector {
+	    // внутренний массив
+        private int[] values;
+        // индексатор
+        public int this[int pos] {
+            get { return values[pos]; }
+            set { values[pos] = value; }
+        }
+        public IntVector(int n) {
+            values = new int[n];
+        }
+        public int getSize() {
+            return values.Length;
+        }
+    }
+}
+```
 ##### Перегрузка операций
 ##### Делегаты
+Делегат - это объект, который указывает на метод.
+```cs
+[Атрибуты] [Спецификаторы] delegate Тип Имя ( Параметры);
+```
+Когда компилятор C# обрабатывает тип делегата, он автоматически генерирует запечатанный (`sealed`) класс, унаследованный от `System.MulticastDelegate`. Этот класс (в сочетании с его базовым классом `System.Delegate`) предоставляет необходимую инфраструктуру для делегата, чтобы хранить список методов, подлежащих вызову.
+```cs
+using System;
+namespace ns
+{
+    class Program
+    {
+        // объявление делегата
+        delegate void Message();
+        public static void Main(string[] args)
+        {
+            Message mes; // создание переменной-делегата
+            mes = Program.Hello; // присваивание адреса метода
+            mes(); // вызов метода
+            
+        }
+        // лямбда-выражение для описания метода класса
+        static void Hello() => Console.WriteLine("Hello!");
+    }
+}
+```
+Делегат с параметрами:
+```cs
+using System;
+namespace ns
+{
+    class Program
+    {
+        delegate int func(int a, int b);
+        public static void Main(string[] args)
+        {
+            func max = (int a, int b) => {
+                if (a > b)
+                    return a;
+                return b;
+            };
+            Console.WriteLine(max(1, 2));
+        }
+    }
+}
+```
 ##### События
